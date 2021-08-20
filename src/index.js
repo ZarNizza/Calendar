@@ -17,7 +17,7 @@ function CalendarHeader() {
 let state = { activeDate: new Date() };
 
 function generateMatrix() {
-  let weekDaysShort = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  let weekDaysShort = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
 
   let year = state.activeDate.getFullYear();
   let month = state.activeDate.getMonth();
