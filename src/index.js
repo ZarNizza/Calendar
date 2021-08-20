@@ -78,9 +78,24 @@ function CalendarTable() {
   let rows = [];
   rows = matrix.map((row, rowIndex) => {
     let rowItems = row.map((item, colIndex) => {
-      return <td>{item}</td>;
+      return <td style={{
+          flex: 1,
+          height: 18,
+          textAlign: "center",
+          backgroundColor: rowIndex == 0 ? "#AAF" : "", // highlight Header
+          color: colIndex == 0 ? "#FF2D00" : "", // highlight Sundays
+          fontWeight: item == state.activeDate.getDate() ? "bold" : "normal"    // highlight CurrentDate
+        }} >
+      {item}</td>;
     });
-    return <tr>{rowItems}</tr>;
+    return <tr style={{
+      flex: 1,
+      flexDirection: "row",
+      padding: 15,
+      justifyContent: "space-around",
+      alignItems: "center"
+      }} >
+    {rowItems}</tr>;
   });
 
   let rowFirst = rows.shift();
