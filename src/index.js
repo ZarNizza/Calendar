@@ -4,7 +4,6 @@ import moment from "moment";
 // import { range } from "moment-range";
 import "./index.css";
 import "./calendar.css";
-
 class Calendar extends Component {
   weekdayshort = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
   weekdayshortEng = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
