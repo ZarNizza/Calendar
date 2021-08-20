@@ -85,8 +85,8 @@ function CalendarTable() {
           backgroundColor: rowIndex == 0 ? "#AAF" : "", // highlight Header
           color: colIndex == 0 ? "#FF2D00" : "", // highlight Sundays
           fontWeight: item == state.activeDate.getDate() ? "bold" : "normal"    // highlight CurrentDate
-        }} >
-      {item}</td>;
+        }} key = {rowIndex.toString()+colIndex.toString()}>
+      {item === "--" ? "" : item }</td>;
     });
     return <tr style={{
       flex: 1,
@@ -94,7 +94,7 @@ function CalendarTable() {
       padding: 15,
       justifyContent: "space-around",
       alignItems: "center"
-      }} >
+      }}  key = {rowIndex.toString()}>
     {rowItems}</tr>;
   });
 
