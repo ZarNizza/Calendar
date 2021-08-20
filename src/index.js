@@ -7,8 +7,6 @@ import "./calendar.css";
 
 
 
-
-
 class Calendar extends Component {
   // weekdayshort = moment.weekdaysShort();
   weekdayshort = [ "Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб" ];
