@@ -14,10 +14,31 @@
 .w100 {width:100vw;}
 .h100 {height:100vh;}
 
+.byelw {background: lightyellow;}
+.bgray {background: tan;}
+.bgren {background: lightgreen;}
+.bblue {background: lavender;}
+.brose {background: lightsalmon;}
+
+.bord {border: 1px solid #1cb864;border-radius:8px;}
+
+.tossing:hover {
+	animation-name: tossing;-webkit-animation-name: tossing;animation-duration: 1.5s;-webkit-animation-duration: 1.5s;animation-iteration-count: infinite;-webkit-animation-iteration-count: infinite;}
+@keyframes tossing {
+	0% {transform: rotate(-2deg);}
+	50% {transform: rotate(2deg);}
+	100% {transform: rotate(-2deg);}						}
+@-webkit-keyframes tossing {
+	0% {-webkit-transform: rotate(-2deg);}
+	50% {-webkit-transform: rotate(2deg);}
+	100% {-webkit-transform: rotate(-2deg);}
+}
+
+.ssspan {min-height: 10px; min-width: 10px;}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
