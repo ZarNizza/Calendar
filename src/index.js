@@ -71,11 +71,13 @@ function Span() {
 
 ReactDOM.render(
   <React.StrictMode>
+    <div style={{margin:20}}>
     <CalendarHeader />
     <CalendarTable />
     <Span />
     <ToDo />
     <Span />
+    </div>
   </React.StrictMode>,
   document.getElementById("root")
 );
