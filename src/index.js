@@ -1,9 +1,11 @@
 // Calendar - pure REACT version, "my own bike ))"
 // skeleton edition
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ReactDOM from "react-dom";
+import CalendarTable from "./calendarMatrix.js"
 import "./index.css";
+
 
 function CalendarHeader() {
   return (
@@ -14,104 +16,29 @@ function CalendarHeader() {
   );
 }
 
-let state = { activeDate: new Date() };
-
-function generateMatrix() {
-  let weekDaysShort = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
-
-  let year = state.activeDate.getFullYear();
-  let month = state.activeDate.getMonth();
-  let firstDay = new Date(year, month, 1).getDay();
-  let daysInMonth = () => {
-    // magic formula! ))
-    if (isNaN(year) || isNaN(month)) {
-      return NaN;
-    }
-    let modMonth = month % 12;
-    year += (month - modMonth) / 12;
-    return modMonth === 1
-      ? (year % 4 == 0 && year % 100 != 0) || year % 400 == 0
-        ? 29
-        : 28
-      : 31 - ((modMonth % 7) % 2);
-  };
-  //console.log(year, " - ", month, ", 1stDay: ", firstDay, ", daysInMonth: ", daysInMonth());
-
-  let matrix = [];
-  matrix[0] = weekDaysShort;
-
-  let counter = 1;
-  for (var row = 1; row < 7; row++) {
-    matrix[row] = [];
-    for (var col = 0; col < 7; col++) {
-      matrix[row][col] = "--";
-      if (row == 1 && col >= firstDay) {
-        // Fill in rows only after the first day of the month
-        matrix[row][col] = counter++;
-      } else if (row > 1 && counter <= daysInMonth()) {
-        // Fill in rows only if the counter’s not greater than the number of days in the month
-        matrix[row][col] = counter++;
-      }
-    }
+function ToDo() {
+  const [someString, setSomeString] = useState('')
+  const [todos, setTodos] = useState([])
+  function handleChange(e) {
+    setSomeString(e.target.value)
   }
-  return matrix;
+  function addItem() {
+    setTodos([...todos, someString])
+    setSomeString('')
+  }
+  return <div>
+     <input value={someString} onChange={handleChange} /><button onClick={addItem}>add</button>
+     <Display mySomething={someString} />
+     {todos.map(todo => <li>{todo}</li>)}
+  </div>
 }
 
-function CalendarTable() {
-  let monthsString = [
-    "Январь",
-    "Февраль",
-    "Март",
-    "Апрель",
-    "Май",
-    "Июнь",
-    "Июль",
-    "Август",
-    "Сентябрь",
-    "Октябрь",
-    "Ноябрь",
-    "Декабрь",
-  ];
-  let matrix = generateMatrix();
-  //  console.log(matrix);
-
-  let rows = [];
-  rows = matrix.map((row, rowIndex) => {
-    let rowItems = row.map((item, colIndex) => {
-      return <td style={{
-          flex: 1,
-          height: 18,
-          textAlign: "center",
-          backgroundColor: rowIndex == 0 ? "#AAF" : "", // highlight Header
-          color: colIndex == 0 ? "#FF2D00" : "", // highlight Sundays
-          fontWeight: item == state.activeDate.getDate() ? "bold" : "normal"    // highlight CurrentDate
-        }} key = {rowIndex.toString()+colIndex.toString()}>
-      {item === "--" ? "" : item }</td>;
-    });
-    return <tr style={{
-      flex: 1,
-      flexDirection: "row",
-      padding: 15,
-      justifyContent: "space-around",
-      alignItems: "center"
-      }}  key = {rowIndex.toString()}>
-    {rowItems}</tr>;
-  });
-
-  let rowFirst = rows.shift();
-
-  return (
-    <div>
-      <table>
-        <caption>
-          {monthsString[state.activeDate.getMonth()]} &nbsp;{" "}
-          {state.activeDate.getFullYear()}
-        </caption>
-        <thead>{rowFirst}</thead>
-        <tbody>{rows}</tbody>
-      </table>
-    </div>
-  );
+function Display(props) {
+  const [foo, setFoo] = useState("false")
+  useEffect(() => {
+    setTimeout(() => setFoo("true"), 1000)
+  }, [  ])
+  return <p>some string is {props.mySomething}, foo is {foo}</p>
 }
 
 function InputLine() {
@@ -144,6 +71,7 @@ function Span() {
 
 ReactDOM.render(
   <React.StrictMode>
+    <ToDo />
     <CalendarHeader />
     <CalendarTable />
     <Span />
