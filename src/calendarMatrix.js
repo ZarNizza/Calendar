@@ -124,6 +124,7 @@ function CalendarTable() {
 
   return (
     <div>
+      <div id="editArea"></div>
       <table>
         <caption>
           {monthsString[activeDate.getMonth()]} &nbsp;{" "}

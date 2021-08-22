@@ -17,12 +17,52 @@ function ToDo() {
 
   function addItem() {
     let toDo = parseToDo(someString);
-    setTodos([...todos, toDo]);
+    //setTodos([...todos, toDo]);   // lag 1 step
+    //setTodos([todos.splice(todos.length+1,0,toDo)]); // Array [ [], {…} ]
+    //setTodos([todos.push([toDo])]); // Array [ 1, (1) […] ]
+    //setTodos([todos.push(toDo)]); // last only - Array [ 1, {…} ]
+    setTodos([...todos, toDo]);     // lag 1 step: Array []  // Array [ {…} ] // Array [ {…}, {…} ]
     setSomeString("");
+    console.log("add ");
+    console.log(todos);
   }
 
-  function editItem(){
+  function delItem(e) {
+    //todos.splice(e.target.id, 1);
+    setTodos([todos.splice(+e.target.id.slice(1), 1)]);
+    console.log("del ");
+    console.log(todos);
+  }
 
+  function editItem(e){
+    let todo = todos[e.target.id];
+    let a = "<p style='width:100%; text-align:center;'>- Edit -</p>"+
+    "<p style='width:100%; text-align:right;'><button id='exitButton' >exit</button></p>" +
+    "<input id='edInputString' width='20em' value='" + 
+    todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time +
+    " - " + todo.who + " - " + todo.whatWhere + 
+    "' />  " +
+    "<button id='saveButton'" + e.target.id + " >save</button>";
+    const editArea = document.getElementById("editArea");
+    editArea.innerHTML = '<div style="display: inline-block; min-width: 25em; min-height: 21em; background: #eee; position: absolute; z-index: 5;">' + a + '</div>';
+    
+    const saveButton = document.getElementById("saveButton");
+    saveButton.addEventListener("click", (event) => {
+        const newToDo = parseToDo(document.getElementById("edInputString").value);
+        //todos[e.target.id] = newToDo;
+        setTodos([todos[e.target.id] = newToDo]);
+    
+        editArea.innerHTML = '';
+        console.log("edit ");
+        console.log(todos);
+    });
+
+    const exitButton = document.getElementById("exitButton");
+    exitButton.addEventListener("click", (event) => {
+        editArea.innerHTML = '';
+    });
+    
+    return;
   }
 
   function parseToDo(draftText) {
@@ -66,7 +106,8 @@ function ToDo() {
 
     }
 
-    console.log(toDo);
+    //console.log('-ToDo-');
+    //console.log(toDo);
     return toDo;
   }
 
@@ -91,7 +132,8 @@ function ToDo() {
       {todos.map((todo, index) => (
           <li key={index} >
           {todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time +
-            " = " + todo.who + " = " + todo.whatWhere} <button id={index} onClick={editItem} >edit</button>
+            " - " + todo.who + " - " + todo.whatWhere} <button id={index} onClick={editItem} >edit</button> &nbsp;
+             <button id={'d'+index} onClick={delItem} >del(X)</button>
         </li>
       ))}
     </div>
