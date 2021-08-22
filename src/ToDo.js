@@ -31,7 +31,7 @@ function ToDo() {
     };
 
     if (draftText) {
-      draftText = draftText.trim();
+      draftText = draftText.replace(/ {1,}/g," ").trim();   // remove multiple spaces
       let date = draftText.match(/(\d*\d\/\d*\d)|(\d*\d\.\d*\d)/i) ? draftText.match(/(\d*\d\/\d*\d)|(\d*\d\.\d*\d)/i)[0] : "";
       toDo.time = draftText.match(/(\d*\d\-\d*\d)|(\d*\d\:\d*\d)/i) ? draftText.match(/(\d*\d\-\d*\d)|(\d*\d\:\d*\d)/i)[0] : "";
       if (date === "") {
@@ -39,15 +39,17 @@ function ToDo() {
         toDo.month = window.aM + 1;
         toDo.year = window.aY;
       } else {
-        toDo.day = +date.slice(0, 2);
-        toDo.month = +date.slice(3, 5);
+        let dashPos = date.indexOf("/");
+        if (dashPos === -1) {dashPos = date.indexOf(".")}
+        toDo.day = +date.slice(0, dashPos);
+        toDo.month = +date.slice(dashPos + 1);
       }
 
       if ( draftText.indexOf("- ") === -1 || draftText.indexOf("- ") === draftText.lastIndexOf("- ")) {
         //inputString without dash+spaces or with one = whatWhere only
         let trimText = draftText;
-        if (date > "") { trimText = trimText.slice(6);}          // date trim
-        if (toDo.time > "") { trimText = trimText.slice(6);}     // time trim
+        if (date > "") { trimText = trimText.slice(date.length + 1);}          // date trim
+        if (toDo.time > "") { trimText = trimText.slice(toDo.time.length + 1);}     // time trim
         toDo.whatWhere = trimText;
         toDo.who = "";
       } else {
@@ -63,7 +65,7 @@ function ToDo() {
     return toDo;
   }
 
-  let defText = "[дата ДД/ММ ][время чч:мм ] - кто - что,где";
+  let defText = "[дата ДД/ММ ][время чч:мм ] - кто - что, где";
 
   return (
     <div>
