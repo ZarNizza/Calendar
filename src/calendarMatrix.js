@@ -2,19 +2,11 @@ import React, {useState} from "react";
 
 function CalendarTable() {
 
-/*     let now = new Date();
-    alert("now= " + now + " localStorage: " + localStorage.getItem("activeDate"));
-    if (!localStorage.getItem("activeDate")) { localStorage.setItem("activeDate", new Date());};
-    const [activeDate, setActiveDate] = useState(localStorage.getItem("activeDate"));
-    alert("actD TYPE: " + typeof activeDate + " aD: " + activeDate);
-    if (typeof activeDate == undefined) {alert("aD undefined!"); setActiveDate(localStorage.getItem("activeDate"));};
-    */
-   
-   const [activeDate, setActiveDate] = useState(new Date());
-   //alert("!!!!!!!!!!!!!!!!!!!!!!!!!!!! START !!!!!!!!!!!!!! aD TYPE = " + typeof activeDate + " aD: " + activeDate);
-    
+    const [activeDate, setActiveDate] = useState(new Date());
+    localStorage.setItem("activeDate", new Date().getDate());
+    localStorage.setItem("activeMonth", new Date().getMonth());
+    localStorage.setItem("activeYear", new Date().getFullYear());
 
-  
     let monthsString = [
         "Январь",
         "Февраль",
@@ -72,15 +64,26 @@ function CalendarTable() {
       }
 
     let matrix = generateMatrix();
-    //  console.log(matrix);
     
     function setActiveTD(aDay) {
         if(isFinite(aDay)) {
         let year = activeDate.getFullYear();
         let month = activeDate.getMonth();
         let newActiveDate = new Date(+year, +month, +aDay);
-//        console.log(newActiveDate);
         setActiveDate(newActiveDate);
+        localStorage.setItem("activeDate", +aDay);
+        localStorage.setItem("activeMonth", month);
+        localStorage.setItem("activeYear", year);
+
+        window.aD = +aDay;
+        window.aM = month;
+        window.aY = year;
+
+//        console.log("_AD= " + activeDate.toString());
+  //      console.log("nAD= " + newActiveDate.toString());
+    //    console.log("(Matrx) " + localStorage.getItem("activeDate") + "-" + localStorage.getItem("activeMonth") + "-" + localStorage.getItem("activeYear"));
+
+
     }}
 
     let rows = [];
