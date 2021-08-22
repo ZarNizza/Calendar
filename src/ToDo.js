@@ -53,13 +53,13 @@ function ToDo() {
     return (
       <div>
         <p><i>{defText}</i></p>
-        <input value={someString} onChange={handleChange} onKeyPress={handleKeyPress} /> &nbsp;
+        <input id="inputString" value={someString} onChange={handleChange} onKeyPress={handleKeyPress} autoFocus /> &nbsp;
         <button onClick={addItem}>add (+)</button>
         <br />
         <br />
         {todos.map((todo) => (
           <li key={todo.date + todo.time + todo.who}>
-            {todo.day + "/" + todo.month + ", " + todo.time + " - " + todo.who + " - " + todo.whatWhere}
+            {todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time + " - " + todo.who + " - " + todo.whatWhere}
           </li>
         ))}
       </div>

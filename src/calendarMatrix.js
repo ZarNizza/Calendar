@@ -70,11 +70,13 @@ function CalendarTable() {
       window.aD = +aDay;
       window.aM = month;
       window.aY = year;
+
+      document.getElementById("inputString").focus();
     }
   }
 
   let matrix = generateMatrix();
-  
+
   let rows = [];
   rows = matrix.map((row, rowIndex) => {
     let rowItems = row.map((item, colIndex) => {
