@@ -3,6 +3,7 @@ import React, { useState } from "react";
 function ToDo() {
   const [someString, setSomeString] = useState("");
   const [todos, setTodos] = useState([]);
+  const toDoList = document.getElementById("toDoList");
 
   function handleChange(e) {
     setSomeString(e.target.value);
@@ -20,6 +21,10 @@ function ToDo() {
     setSomeString("");
   }
 
+  function editItem(){
+
+  }
+
   function parseToDo(draftText) {
     let toDo = {
       day: 31,
@@ -31,7 +36,7 @@ function ToDo() {
     };
 
     if (draftText) {
-      draftText = draftText.replace(/ {1,}/g," ").trim();   // remove multiple spaces
+      draftText = draftText.replace(/\s{1,}/g," ").trim();   // remove multiple spaces
       let date = draftText.match(/(\d*\d\/\d*\d)|(\d*\d\.\d*\d)/i) ? draftText.match(/(\d*\d\/\d*\d)|(\d*\d\.\d*\d)/i)[0] : "";
       toDo.time = draftText.match(/(\d*\d\-\d*\d)|(\d*\d\:\d*\d)/i) ? draftText.match(/(\d*\d\-\d*\d)|(\d*\d\:\d*\d)/i)[0] : "";
       if (date === "") {
@@ -83,10 +88,10 @@ function ToDo() {
       <button onClick={addItem}>add (+)</button>
       <br />
       <br />
-      {todos.map((todo) => (
-        <li key={todo.date + todo.time + todo.who}>
+      {todos.map((todo, index) => (
+          <li key={index} >
           {todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time +
-            " = " + todo.who + " = " + todo.whatWhere}
+            " = " + todo.who + " = " + todo.whatWhere} <button id={index} onClick={editItem} >edit</button>
         </li>
       ))}
     </div>
