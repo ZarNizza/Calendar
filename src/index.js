@@ -3,8 +3,8 @@
 
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import CalendarTable from "./calendarMatrix.js";
-import ToDo from "./ToDo.js";
+//import CalendarTable from "./calendarMatrix.js";
+import {EventList} from "./EventList.js";
 import "./index.css";
 
 function CalendarHeader() {
@@ -24,9 +24,9 @@ ReactDOM.render(
   <React.StrictMode>
     <div style={{margin:20}}>
     <CalendarHeader />
-    <CalendarTable />
+    {/* <CalendarTable /> */}
     <Span />
-    <ToDo />
+    <EventList />
     <Span />
     </div>
   </React.StrictMode>,
