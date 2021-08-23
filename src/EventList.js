@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { parseEvent } from "./parseEvent.js";
 import { EventItem } from "./EventItem.js";
-import {EventPopup} from "./EventPopup.js";
+import { EventPopup } from "./EventPopup.js";
 
 export function EventList() {
-  const [draftText, setDraftText] = useState("");
+  const [draftItem, setDraftItem] = useState("");
   // arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
   const [events, setEvents] = useState([]);
   // eventToEdit = null OR event
   const [eventToEdit, setEventToEdit] = useState(null);
 
   function handleChange(e) {
-    setDraftText(e.target.value);
+    setDraftItem(e.target.value);
   }
 
   function handleKeyPress(e) {
@@ -21,17 +21,20 @@ export function EventList() {
   }
 
   function addItem() {
-    let event = parseEvent(draftText);
-    setEvents([...events, event]);
-    setDraftText("");
+    let eventItem = parseEvent(draftItem);
+    console.log("addItem");
+    console.log(eventItem);
+    setEvents([...events, eventItem]);
+    setDraftItem("");
+    console.log(events);
   }
 
   function deleteItem(eventToDelete) {
-    const updatedEvents = events.filter((event) => event !== eventToDelete);
+    const updatedEvents = events.filter((eventItem) => eventItem !== eventToDelete);
     setEvents(updatedEvents);
   }
 
-  let defText = "[дата ДД/ММ ][время чч:мм ] - кто - что, где";
+  let defText = '[дата ДД/ММ ][время чч:мм ]["название" ][- кто ]- что, где';
 
 
 
@@ -44,7 +47,7 @@ export function EventList() {
         type="text"
         id="inputString"
         autoFocus
-        value={draftText}
+        value={draftItem}
         onChange={handleChange}
         onKeyPress={handleKeyPress}
         style={{ width: 330 }}
@@ -53,8 +56,8 @@ export function EventList() {
       <button onClick={addItem}>add (+)</button>
       <br />
       <br />
-      {events.map(event => <EventItem key={event.id} event={event} eventToEdit={setEventToEdit} deleteItem={deleteItem} />)}
-      <EventPopup isOpen={index !== null} event={eventToEdit} />
+      {events.map(eventItem => <EventItem key={eventItem.id} event={eventItem} eventToEdit={setEventToEdit} deleteItem={deleteItem} />)}
+      {/* <EventPopup isOpen={eventToEdit.id !== null} event={eventToEdit} /> */}
     </div>
   );
 }
