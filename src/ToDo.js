@@ -49,7 +49,7 @@ function ToDo() {
     "<p> </p>" +
     "<input id='edInputString' style='width:350px;' value='" + 
     todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time +
-    " - " + todo.who + " - " + todo.whatWhere + 
+    (todo.header > "" ? (' "' + todo.header + '"') : "") + (todo.who > "" ? (" - " + todo.who) : "") + " - " + todo.whatWhere + 
     "' />  " +
     "<button id='saveButton'" + e.target.id + " >save</button>";
     const editArea = document.getElementById("editArea");
@@ -80,6 +80,7 @@ function ToDo() {
       month: 11,
       year: 2021,
       time: " ",
+      header: "",
       who: "",
       whatWhere: "BlackStar Party",
     };
@@ -97,6 +98,12 @@ function ToDo() {
         if (dashPos === -1) {dashPos = date.indexOf(".")}
         toDo.day = +date.slice(0, dashPos);
         toDo.month = +date.slice(dashPos + 1);
+      }
+
+      if (draftText.indexOf('"') > -1 && draftText.lastIndexOf('"') != draftText.indexOf('"')) {
+        toDo.header = draftText.slice(draftText.indexOf('"') +1, draftText.lastIndexOf('"'));
+      } else if (draftText.indexOf("'") > -1 && draftText.lastIndexOf("'") != draftText.indexOf("'")) {
+        toDo.header = draftText.slice(draftText.indexOf("'") +1, draftText.lastIndexOf("'"));
       }
 
       if ( draftText.indexOf("- ") === -1 || draftText.indexOf("- ") === draftText.lastIndexOf("- ")) {
@@ -120,7 +127,7 @@ function ToDo() {
     return toDo;
   }
 
-  let defText = "[дата ДД/ММ ][время чч:мм ] - кто - что, где";
+  let defText = '[дата ДД/ММ ][время чч:мм ]["название" ][- кто ]- что, где';
 
   return (
     <div>
@@ -142,7 +149,7 @@ function ToDo() {
       <br />
       {todos.map((todo, index) => (
           <li key={index} >
-          {todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time +
+          {todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time + ' "' + todo.header + '"' +
             " - " + todo.who + " - " + todo.whatWhere} <button id={index} onClick={editItem} >edit</button> &nbsp;
              <button id={'d'+index} onClick={delItem} >del(X)</button>
         </li>
