@@ -23,7 +23,16 @@ function ToDo() {
     //setTodos([todos.push(toDo)]); // last only - Array [ 1, {…} ]
     setTodos([...todos, toDo]);     // lag 1 step: Array []  // Array [ {…} ] // Array [ {…}, {…} ]
     setSomeString("");
-    console.log("add ");
+
+ /*        toDos.push(ToDo);
+        const toDoList = document.getElementById("toDoList");
+        toDoList.innerHTML = toDos
+          .map(
+            (toDo, index) =>
+              `<p><input id="chk${index.toString()}" type="checkbox"> - <span id="sp${index.toString()}" style="text-decoration:none;">${toDo}</span></p>`
+          )
+          .join("");
+ */    console.log("add ");
     console.log(todos);
   }
 
@@ -36,9 +45,9 @@ function ToDo() {
 
   function editItem(e){
     let todo = todos[e.target.id];
-    let a = "<p style='width:100%; text-align:center;'>- Edit -</p>"+
-    "<p style='width:100%; text-align:right;'><button id='exitButton' >exit</button></p>" +
-    "<input id='edInputString' width='20em' value='" + 
+    let a = "<p style='width:100%; text-align:right;'><span style='display:inline-block; width:350px; text-align:center;'>- Edit -</span><button id='exitButton' >exit</button></p>" +
+    "<p> </p>" +
+    "<input id='edInputString' style='width:350px;' value='" + 
     todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time +
     " - " + todo.who + " - " + todo.whatWhere + 
     "' />  " +
@@ -119,11 +128,13 @@ function ToDo() {
         <i>{defText}</i>
       </p>
       <input
+        type="text"
         id="inputString"
+        autoFocus
         value={someString}
         onChange={handleChange}
         onKeyPress={handleKeyPress}
-        autoFocus
+        style={{width:330}}
       />{" "}
       &nbsp;
       <button onClick={addItem}>add (+)</button>
