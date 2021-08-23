@@ -4,6 +4,8 @@ function ToDo() {
   const [someString, setSomeString] = useState("");
   const [todos, setTodos] = useState([]);
   const toDoList = document.getElementById("toDoList");
+  const localToDo = [];
+  const localToDo2 = [];
 
   function handleChange(e) {
     setSomeString(e.target.value);
@@ -21,30 +23,29 @@ function ToDo() {
     //setTodos([todos.splice(todos.length+1,0,toDo)]); // Array [ [], {…} ]
     //setTodos([todos.push([toDo])]); // Array [ 1, (1) […] ]
     //setTodos([todos.push(toDo)]); // last only - Array [ 1, {…} ]
+    localToDo.push([toDo]);
+    localToDo2.push(toDo);
     setTodos([...todos, toDo]);     // lag 1 step: Array []  // Array [ {…} ] // Array [ {…}, {…} ]
     setSomeString("");
-
- /*        toDos.push(ToDo);
-        const toDoList = document.getElementById("toDoList");
-        toDoList.innerHTML = toDos
-          .map(
-            (toDo, index) =>
-              `<p><input id="chk${index.toString()}" type="checkbox"> - <span id="sp${index.toString()}" style="text-decoration:none;">${toDo}</span></p>`
-          )
-          .join("");
- */    console.log("add ");
+    console.log("add ");
     console.log(todos);
+    console.log(localToDo);
+    console.log(localToDo2);
   }
-
+  
   function delItem(e) {
     //todos.splice(e.target.id, 1);
+    localToDo.splice(+e.target.id.slice(1), 1);
+    localToDo2.splice(+e.target.id.slice(1), 1);
     setTodos([todos.splice(+e.target.id.slice(1), 1)]);
     console.log("del ");
     console.log(todos);
+    console.log(localToDo);
+    console.log(localToDo2);
   }
 
   function editItem(e){
-    let todo = todos[e.target.id];
+    let todo = localToDo[e.target.id];
     let a = "<p style='width:100%; text-align:right;'><span style='display:inline-block; width:350px; text-align:center;'>- Edit -</span><button id='exitButton' >exit</button></p>" +
     "<p> </p>" +
     "<input id='edInputString' style='width:350px;' value='" + 
@@ -59,8 +60,8 @@ function ToDo() {
     saveButton.addEventListener("click", (event) => {
         const newToDo = parseToDo(document.getElementById("edInputString").value);
         //todos[e.target.id] = newToDo;
+        localToDo[e.target.id] = newToDo;
         setTodos([todos[e.target.id] = newToDo]);
-    
         editArea.innerHTML = '';
         console.log("edit ");
         console.log(todos);
@@ -140,7 +141,7 @@ function ToDo() {
       <button onClick={addItem}>add (+)</button>
       <br />
       <br />
-      {todos.map((todo, index) => (
+      {localToDo2.map((todo, index) => (
           <li key={index} >
           {todo.day + "/" + todo.month + (todo.time > " " ? ", " : "") + todo.time +
             " - " + todo.who + " - " + todo.whatWhere} <button id={index} onClick={editItem} >edit</button> &nbsp;
