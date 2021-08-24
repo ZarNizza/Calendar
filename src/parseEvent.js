@@ -23,12 +23,10 @@ function errHandler() {
 
       date = draftItem.match(/(\d\d\/\d\d)|(\d\d\.\d\d)/i) ? draftItem.match(/(\d\d\/\d\d)|(\d\d\.\d\d)/i)[0] : "";
       if (date === "") {
-        alert("bad date! ");
         const dateNow = new Date( Date.now());
         day = dateNow.getDate();
         month = dateNow.getMonth() +1;
       } else {
-        alert("ok, date =" + date);
         dashPos = date.indexOf("/");
         if (dashPos === -1) {dashPos = date.indexOf(".")}
         day = date.slice(0, dashPos);
@@ -38,7 +36,6 @@ function errHandler() {
       if (day > "31" || day < "00") {errHandler()};
       if (month < 10) {month = "0" + month;}
       if (month > "12" || month < "00") {errHandler()};
-      console.log("parse- date="+ date + " m=" + month + " d=" + day);
       
       time = draftItem.match(/(\d\d-\d\d)|(\d\d:\d\d)/i) ? draftItem.match(/(\d\d-\d\d)|(\d\d:\d\d)/i)[0] : "";
       if (time !== ""){  
@@ -49,12 +46,10 @@ function errHandler() {
         minutes = time.slice(dashPos + 1);
         if (minutes < 10) {minutes = "0" + minutes;}
       }
-      console.log("prase- time="+ time + " h=" + hours + " m=" + minutes);
 
         let tmpTime = (hours > "" && minutes > "" && hours < "24" && minutes < "60" && hours >= "00" && minutes >= "00") ? ("T" + hours + ":" + minutes) : "T00:00";
         let tmpDate = year + "-" + month + "-" + day + tmpTime;
-        console.log("--------- tmpDate=" + tmpDate );
-        if (Date.parse(tmpDate)) {eventItem.timeStamp = Date.parse(tmpDate); alert("OK! " + eventItem.timeStamp);} else {alert("default date!" + eventItem.timeStamp);}
+        if (Date.parse(tmpDate)) {eventItem.timeStamp = Date.parse(tmpDate);}
 
         // header
       if (draftItem.indexOf('"') > -1 && draftItem.lastIndexOf('"') !== draftItem.indexOf('"')) {
