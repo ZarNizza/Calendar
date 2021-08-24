@@ -19,37 +19,42 @@ function errHandler() {
 }
     if (draftItem) {
       draftItem = draftItem.replace(/\s{1,}/g," ").trim();   // remove multiple spaces
-
-      date = draftItem.match(/(\d*\d\/\d\d*)|(\d*\d\.\d\d*)/i) ? draftItem.match(/(\d*\d\/\d\d*)|(\d*\d\.\d\d*)/i)[0] : "";
-      time = draftItem.match(/(\d*\d-\d\d*)|(\d*\d:\d\d*)/i) ? draftItem.match(/(\d*\d-\d\d*)|(\d*\d:\d\d*)/i)[0] : "";
       let dashPos = -1;
 
+      date = draftItem.match(/(\d\d\/\d\d)|(\d\d\.\d\d)/i) ? draftItem.match(/(\d\d\/\d\d)|(\d\d\.\d\d)/i)[0] : "";
       if (date === "") {
-        eventItem.timeStamp = Date.now();
+        alert("bad date! ");
+        const dateNow = new Date( Date.now());
+        day = dateNow.getDate();
+        month = dateNow.getMonth() +1;
       } else {
+        alert("ok, date =" + date);
         dashPos = date.indexOf("/");
         if (dashPos === -1) {dashPos = date.indexOf(".")}
         day = date.slice(0, dashPos);
-        if (day.length === 1) {day = "0" + day;}
         month = date.slice(dashPos + 1);
-        if (month.length === 1) {month = "0" + month;}
       }
+      if (day < 10) {day = "0" + day;}
+      if (day > "31" || day < "00") {errHandler()};
+      if (month < 10) {month = "0" + month;}
+      if (month > "12" || month < "00") {errHandler()};
+      console.log("parse- date="+ date + " m=" + month + " d=" + day);
+      
+      time = draftItem.match(/(\d\d-\d\d)|(\d\d:\d\d)/i) ? draftItem.match(/(\d\d-\d\d)|(\d\d:\d\d)/i)[0] : "";
       if (time !== ""){  
         dashPos = time.indexOf("-");
         if (dashPos === -1) {dashPos = time.indexOf(":")}
         hours = time.slice(0, dashPos);
-        if (hours.length === 1) {hours = "0" + hours;}
+        if (hours < 10) {hours = "0" + hours;}
         minutes = time.slice(dashPos + 1);
-        if (minutes.length === 1) {minutes = "0" + minutes;}
+        if (minutes < 10) {minutes = "0" + minutes;}
       }
+      console.log("prase- time="+ time + " h=" + hours + " m=" + minutes);
 
-      // bad date = error, bad time = ""  
-        let tmpTime = (hours > "" && minutes > "" && hours < "24" && minutes < "60" && hours >= "00" && minutes >= "00") ? ("T" + hours + ":" + minutes) : "";
-        if (month > "12" || month < "00") {errHandler()};
-        if (day > "31" || day < "00") {errHandler()};
-
+        let tmpTime = (hours > "" && minutes > "" && hours < "24" && minutes < "60" && hours >= "00" && minutes >= "00") ? ("T" + hours + ":" + minutes) : "T00:00";
         let tmpDate = year + "-" + month + "-" + day + tmpTime;
-        if (Date.parse(tmpDate)) {eventItem.timeStamp = Date.parse(tmpDate);}
+        console.log("--------- tmpDate=" + tmpDate );
+        if (Date.parse(tmpDate)) {eventItem.timeStamp = Date.parse(tmpDate); alert("OK! " + eventItem.timeStamp);} else {alert("default date!" + eventItem.timeStamp);}
 
         // header
       if (draftItem.indexOf('"') > -1 && draftItem.lastIndexOf('"') !== draftItem.indexOf('"')) {

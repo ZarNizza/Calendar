@@ -22,11 +22,8 @@ export function EventList() {
 
   function addItem() {
     const eventItem = parseEvent(draftItem);
-    console.log("addItem");
-    console.log(eventItem);
     setEvents(events => ([...events, eventItem]) );
     setDraftItem("");
-    console.log(events);
   }
 
   function deleteItem(eventToDelete) {

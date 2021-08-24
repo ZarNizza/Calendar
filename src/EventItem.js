@@ -3,17 +3,15 @@ export function EventItem(props) {
 const eventItem = props.eventItem;
 const setEventToEdit = props.setEventToEdit;
 const deleteItem = props.deleteItem;
-console.log("eventItem - listing: props / eventItem");
-console.log(props);
-console.log(eventItem);
 const date = new Date(eventItem.timeStamp);
 const day = date.getDate();
 const month = date.getMonth() +1;
-const time = date.getHours() + "-" + date.getMinutes();
+let time = " " + (date.getHours() < 10 ? "0" : "") + date.getHours() + ":" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+if (time === " 00:00") {time = ""};
 
   return (
     <li >{
-        day + "/" + month + " " + time +
+        day + "/" + month + time +
         ' "' + eventItem.header + '"' +
         " - " + eventItem.who + " - " +
         eventItem.description}{" "}
