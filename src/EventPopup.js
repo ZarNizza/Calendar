@@ -1,15 +1,24 @@
 import { useState } from "react";
+import { FlexBgDiv, FlexPopupDiv, SoloDiv } from "./styled-components/Center";
 
 // This component edits an event in a popup
 export function EventPopup({ isOpen, event, closePopup, updateEvent }) {
-  const [oneUpdatedEvent, setOneUpdatedEvent] = useState(event);
-  const [errors, setErrors] = useState([]);
+const [singleUpdatedEvent, setSingleUpdatedEvent] = useState(event);
+const [errors, setErrors] = useState([]);
+
   if (!isOpen) return null;
 
   function validate() {
-    console.log("oneUpdatedEvent.header", oneUpdatedEvent.header);
-    if (oneUpdatedEvent.header.length < 3) {
+    if (singleUpdatedEvent.header.length < 3) {
       setErrors(["header is too short"]);
+      return false;
+    }
+    if (singleUpdatedEvent.who.match(/[^\d\w\sа-я,.!;]/i)) {
+      setErrors(["! members list has wrong symbols"]);
+      return false;
+    }
+    if (singleUpdatedEvent.description.match(/[^\d\w\sа-я,.!;]/i)) {
+      setErrors(["! description text has wrong symbols"]);
       return false;
     }
     setErrors([]);
@@ -17,67 +26,93 @@ export function EventPopup({ isOpen, event, closePopup, updateEvent }) {
   }
 
   return (
-    <div
-      className="flcc"
-      style={{
-        position: "fixed",
-        top: "0px",
-        left: "0px",
-        backgroundColor: "rgba(200, 200, 200, 0.7)",
-        width: "100%",
-        height: "100%",
-      }}
-    >
-      <div
-        className="vcenter"
-        style={{
-          position: "absolute",
-          backgroundColor: "white",
-          width: "300px",
-          height: "300px",
-          margin: "auto",
-        }}
-      >
-        {errors.length === 0
-          ? null
-          : errors.map((error) => <div key={error}>{error}</div>)}
+    <FlexBgDiv>
+      <FlexPopupDiv>
         <div>{JSON.stringify(event)}</div>
-        <div>
+{/* input area */}
+        <SoloDiv>
           <label>
             {" "}
             Header:{" "}
             <input
-              value={oneUpdatedEvent.header}
+              id="inputHeader"
+              value={singleUpdatedEvent.header}
               onChange={(e) => {
-                setOneUpdatedEvent({
-                  ...oneUpdatedEvent,
+                setSingleUpdatedEvent({
+                  ...singleUpdatedEvent,
                   header: e.target.value,
                 });
-                console.log("e.target.value", e.target.value);
-
                 if (e.target.value.length < 3) {
-                  setErrors(["header is too short"]);
+                  setErrors(["! header is too short"]);
                 } else {
                   setErrors([]);
                 }
               }}
-            />
+              style={{width:"250px"}}/>
           </label>
+        </SoloDiv>
+        <SoloDiv>
+          <label>
+            {" "}
+            Members:{" "}
+            <input
+              id="inputWho"
+              value={singleUpdatedEvent.who}
+              onChange={(e) => {
+                setSingleUpdatedEvent({
+                  ...singleUpdatedEvent,
+                  who: e.target.value,
+                });
+                if (e.target.value.match(/[^\d\w\sа-я,.!;]/i)) {
+                  setErrors(["! members list has wrong symbols"]);
+                } else {
+                  setErrors([]);
+                }
+              }}
+            style={{width:"250px"}} />
+          </label>
+        </SoloDiv>
+        <SoloDiv>
+          <label>
+            {" "}
+            Description:{" "}
+            <input
+              id="inputDescription"
+              value={singleUpdatedEvent.description}
+              onChange={(e) => {
+                setSingleUpdatedEvent({
+                  ...singleUpdatedEvent,
+                  description: e.target.value,
+                });
+                if (e.target.value.match(/[^\d\w\sа-я,.!;]/i)) {
+                  setErrors(["! description text has wrong symbols"]);
+                } else {
+                  setErrors([]);
+                }
+              }}
+            style={{width:"250px"}} />
+          </label>
+        </SoloDiv>
+
+{/* buttons string */}
+        <div style={{ textAlign: "right" }}>
+          <button onClick={closePopup}>Cancel</button> &nbsp;
+          <button
+            onClick={() => {
+              const isValid = validate();
+              if (isValid) {
+                updateEvent(singleUpdatedEvent);
+                closePopup();
+              }
+            }}
+          >
+            {" "}
+            OK{" "}
+          </button>
         </div>
-        <button onClick={closePopup}>Cancel</button> &nbsp;
-        <button
-          onClick={() => {
-            const isValid = validate();
-            if (isValid) {
-              updateEvent(oneUpdatedEvent);
-              closePopup();
-            }
-          }}
-        >
-          {" "}
-          OK{" "}
-        </button>
-      </div>
-    </div>
+{/* error string */}
+        {errors.length === 0 ? null : errors.map((error) => <div key={error} style={{color:"red"}}>{error}</div>)}
+      </FlexPopupDiv>
+    </FlexBgDiv>
   );
 }
