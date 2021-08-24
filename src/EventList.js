@@ -41,14 +41,14 @@ export function EventList() {
   }
 
   const defText = '[дата ДД/ММ ][время чч:мм ]["название" ][- кто ]- что, где';
-  const testText = '12/12 15-15 "aaa" - bbb - ccc';
+  const testText = '25/08 08-15 "Подвиг" - Барон М. - Завтрак, разогнать тучи, подвиг';
 
   return (
     <div>
       <p>
         <i>{defText}</i>
       </p>
-      <p>{testText}</p>
+      <p style={{color:"lightgray"}}>{testText}</p>
       <input
         type="text"
         id="inputString"

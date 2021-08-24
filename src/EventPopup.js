@@ -28,7 +28,6 @@ const [errors, setErrors] = useState([]);
   return (
     <FlexBgDiv>
       <FlexPopupDiv>
-        <div>{JSON.stringify(event)}</div>
 {/* input area */}
         <SoloDiv>
           <label>
