@@ -1,6 +1,5 @@
 export function EventItem(props) {
   // arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
-// const {eventItem, setEventToEdit, deleteItem} = props;
 const eventItem = props.eventItem;
 const setEventToEdit = props.setEventToEdit;
 const deleteItem = props.deleteItem;

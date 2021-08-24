@@ -17,14 +17,12 @@ export function parseEvent(draftItem) {
 function errHandler() {
 
 }
-console.log("parse ---");
     if (draftItem) {
       draftItem = draftItem.replace(/\s{1,}/g," ").trim();   // remove multiple spaces
 
       date = draftItem.match(/(\d*\d\/\d\d*)|(\d*\d\.\d\d*)/i) ? draftItem.match(/(\d*\d\/\d\d*)|(\d*\d\.\d\d*)/i)[0] : "";
       time = draftItem.match(/(\d*\d-\d\d*)|(\d*\d:\d\d*)/i) ? draftItem.match(/(\d*\d-\d\d*)|(\d*\d:\d\d*)/i)[0] : "";
       let dashPos = -1;
-      console.log("date=" + date + " time=" + time);
 
       if (date === "") {
         eventItem.timeStamp = Date.now();
@@ -52,10 +50,6 @@ console.log("parse ---");
 
         let tmpDate = year + "-" + month + "-" + day + tmpTime;
         if (Date.parse(tmpDate)) {eventItem.timeStamp = Date.parse(tmpDate);}
-      //  if (eventItem.timeStamp === 0) {errHandler();} 
-        
-        console.log(year+"-"+month+"-"+day+" = " + tmpDate );
-        console.log(new Date(eventItem.timeStamp));
 
         // header
       if (draftItem.indexOf('"') > -1 && draftItem.lastIndexOf('"') !== draftItem.indexOf('"')) {
@@ -80,10 +74,6 @@ console.log("parse ---");
       }
       
     }
-    console.log("draftItem = " + draftItem);
-    console.log("header=" + eventItem.header + " who=" + eventItem.who + " description=" + eventItem.description);
- //   console.log("parsed eventItem");
-   // console.log(eventItem);
 
     return eventItem;
   }
