@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 //import CalendarTable from "./calendarMatrix.js";
 import {EventList} from "./EventList.js";
 import "./index.css";
+import {FancyDiv} from "./styled-components/Center";
 
 function CalendarHeader() {
   return (
@@ -28,6 +29,7 @@ ReactDOM.render(
     <Span />
     <EventList />
     <Span />
+    <FancyDiv>Hello!</FancyDiv>
     </div>
   </React.StrictMode>,
   document.getElementById("root")
