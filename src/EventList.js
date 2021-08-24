@@ -22,19 +22,26 @@ export function EventList() {
 
   function addItem() {
     const eventItem = parseEvent(draftItem);
-    setEvents(events => ([...events, eventItem]) );
+    setEvents((events) => [...events, eventItem]);
     setDraftItem("");
   }
 
   function deleteItem(eventToDelete) {
-    const updatedEvents = events.filter((eventItem) => eventItem !== eventToDelete);
+    const updatedEvents = events.filter(
+      (eventItem) => eventItem !== eventToDelete
+    );
+    setEvents(updatedEvents);
+  }
+
+  function handleUpdateEvent(updatedEvent) {
+    const updatedEvents = events.map((event) =>
+      event.id === updatedEvent.id ? updatedEvent : event
+    );
     setEvents(updatedEvents);
   }
 
   const defText = '[дата ДД/ММ ][время чч:мм ]["название" ][- кто ]- что, где';
   const testText = '12/12 15-15 "aaa" - bbb - ccc';
-
-
 
   return (
     <div>
@@ -55,9 +62,22 @@ export function EventList() {
       <button onClick={addItem}>add (+)</button>
       <br />
       <br />
-      {events.map(eventItem => <EventItem key={eventItem.id} eventItem={eventItem} eventToEdit={setEventToEdit} deleteItem={deleteItem} />)}
-      {(eventToEdit !== null) ? <EventPopup isOpen={eventToEdit.id !== null} event={eventToEdit} /> : ""}
+      {events.map((eventItem) => (
+        <EventItem
+          key={eventItem.id}
+          eventItem={eventItem}
+          setEventToEdit={setEventToEdit}
+          deleteItem={deleteItem}
+        />
+      ))}
+      {eventToEdit !== null ? (
+        <EventPopup
+          isOpen={eventToEdit.id !== null}
+          event={eventToEdit}
+          closePopup={() => setEventToEdit(null)}
+          updateEvent={handleUpdateEvent}
+        />
+      ) : null}
     </div>
   );
 }
-

@@ -1,0 +1,4 @@
+- edit in popup;
+- validate input; 
+- save to localStorage on reRender;
+- datePicker;

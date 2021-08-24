@@ -16,12 +16,8 @@ if (time === " 00:00") {time = ""};
         " - " + eventItem.who + " - " +
         eventItem.description}{" "}
       <button
-        onClick={() => {
-          setEventToEdit(eventItem);
-        }}
-      >
-        edit
-      </button>{" "}
+        onClick={() => setEventToEdit(eventItem)}
+      >edit</button>{" "}
       &nbsp;
       <button onClick={() => deleteItem(eventItem)}>del(X)</button>
     </li>
