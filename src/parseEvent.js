@@ -19,7 +19,7 @@ export function parseEvent(draftItem) {
       draftItem = draftItem.replace(/\s{1,}/g," ").trim();   // remove multiple spaces
       // timeStamp
       date = draftItem.match(/(\d*\d\/\d\d*)|(\d*\d\.\d\d*)/i) ? draftItem.match(/(\d*\d\/\d\d*)|(\d*\d\.\d\d*)/i)[0] : "";
-      time = draftItem.match(/(\d*\d\-\d\d*)|(\d*\d\:\d\d*)/i) ? draftItem.match(/(\d*\d\-\d\d*)|(\d*\d\:\d\d*)/i)[0] : "";
+      time = draftItem.match(/(\d*\d-\d\d*)|(\d*\d:\d\d*)/i) ? draftItem.match(/(\d*\d-\d\d*)|(\d*\d:\d\d*)/i)[0] : "";
       if (date === "") {
         eventItem.timeStamp = new Date.now();
       } else {
@@ -36,15 +36,16 @@ export function parseEvent(draftItem) {
         minutes = time.slice(dashPos + 1);
         if (minutes.length === 1) {minutes = "0" + minutes;}
         let tmpDate = year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
-        eventItem.timeStamp = Date.parse(tmpDate);
+        eventItem.timeStamp = (Date.parse(tmpDate)) ? Date.parse(tmpDate) : Date.parse('1970-01-01');
+
         
         console.log(year+"-"+month+"-"+day+" = " + tmpDate );
         console.log(new Date(eventItem.timeStamp));
       }
       // header
-      if (draftItem.indexOf('"') > -1 && draftItem.lastIndexOf('"') != draftItem.indexOf('"')) {
+      if (draftItem.indexOf('"') > -1 && draftItem.lastIndexOf('"') !== draftItem.indexOf('"')) {
         eventItem.header = draftItem.slice(draftItem.indexOf('"') +1, draftItem.lastIndexOf('"'));
-      } else if (draftItem.indexOf("'") > -1 && draftItem.lastIndexOf("'") != draftItem.indexOf("'")) {
+      } else if (draftItem.indexOf("'") > -1 && draftItem.lastIndexOf("'") !== draftItem.indexOf("'")) {
         eventItem.header = draftItem.slice(draftItem.indexOf("'") +1, draftItem.lastIndexOf("'"));
       }
       // who + description

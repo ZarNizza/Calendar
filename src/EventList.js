@@ -57,7 +57,7 @@ export function EventList() {
       <br />
       <br />
       {events.map(eventItem => <EventItem key={eventItem.id} event={eventItem} eventToEdit={setEventToEdit} deleteItem={deleteItem} />)}
-      {/* <EventPopup isOpen={eventToEdit.id !== null} event={eventToEdit} /> */}
+      {(eventToEdit !== null) ? <EventPopup isOpen={eventToEdit.id !== null} event={eventToEdit} /> : ""}
     </div>
   );
 }

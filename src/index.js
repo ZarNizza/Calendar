@@ -1,7 +1,7 @@
 // Calendar - pure REACT version, "my own bike ))"
 // skeleton edition
 
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 //import CalendarTable from "./calendarMatrix.js";
 import {EventList} from "./EventList.js";
