@@ -1,16 +1,21 @@
 export function EventItem(props) {
   // arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
-const {eventItem, setEventToEdit, deleteItem} = props;
-console.log("eventItem - listing");
+// const {eventItem, setEventToEdit, deleteItem} = props;
+const eventItem = props.eventItem;
+const setEventToEdit = props.setEventToEdit;
+const deleteItem = props.deleteItem;
+console.log("eventItem - listing: props / eventItem");
+console.log(props);
 console.log(eventItem);
-const day = eventItem.timeStamp.getDate();
-const month = eventItem.timeStamp.getMonth();
-const time = eventItem.timeStamp.getHours()+"-"+eventItem.timeStamp.getMinutes();
+const date = new Date(eventItem.timeStamp);
+const day = date.getDate();
+const month = date.getMonth();
+const time = date.getHours() + "-" + date.getMinutes();
 
   return (
     <li >{
         day + "/" + month + " " + time +
-        '"' + eventItem.header + '"' +
+        ' "' + eventItem.header + '"' +
         " - " + eventItem.who + " - " +
         eventItem.description}{" "}
       <button

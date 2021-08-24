@@ -7,6 +7,8 @@ export function EventList() {
   const [draftItem, setDraftItem] = useState("");
   // arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
   const [events, setEvents] = useState([]);
+  console.log("EvList - declare events");
+  console.log(events);
   // eventToEdit = null OR event
   const [eventToEdit, setEventToEdit] = useState(null);
 
@@ -21,10 +23,10 @@ export function EventList() {
   }
 
   function addItem() {
-    let eventItem = parseEvent(draftItem);
+    const eventItem = parseEvent(draftItem);
     console.log("addItem");
     console.log(eventItem);
-    setEvents([...events, eventItem]);
+    setEvents(events => ([...events, eventItem]) );
     setDraftItem("");
     console.log(events);
   }
@@ -34,7 +36,8 @@ export function EventList() {
     setEvents(updatedEvents);
   }
 
-  let defText = '[дата ДД/ММ ][время чч:мм ]["название" ][- кто ]- что, где';
+  const defText = '[дата ДД/ММ ][время чч:мм ]["название" ][- кто ]- что, где';
+  const testText = '12/12 15-15 "aaa" - bbb - ccc';
 
 
 
@@ -43,6 +46,7 @@ export function EventList() {
       <p>
         <i>{defText}</i>
       </p>
+      <p>{testText}</p>
       <input
         type="text"
         id="inputString"
@@ -56,7 +60,7 @@ export function EventList() {
       <button onClick={addItem}>add (+)</button>
       <br />
       <br />
-      {events.map(eventItem => <EventItem key={eventItem.id} event={eventItem} eventToEdit={setEventToEdit} deleteItem={deleteItem} />)}
+      {events.map(eventItem => <EventItem key={eventItem.id} eventItem={eventItem} eventToEdit={setEventToEdit} deleteItem={deleteItem} />)}
       {(eventToEdit !== null) ? <EventPopup isOpen={eventToEdit.id !== null} event={eventToEdit} /> : ""}
     </div>
   );
