@@ -7,8 +7,6 @@ export function EventList() {
   const [draftItem, setDraftItem] = useState("");
   // arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
   const [events, setEvents] = useState([]);
-  console.log("EvList - declare events");
-  console.log(events);
   // eventToEdit = null OR event
   const [eventToEdit, setEventToEdit] = useState(null);
 

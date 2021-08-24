@@ -8,7 +8,7 @@ console.log(props);
 console.log(eventItem);
 const date = new Date(eventItem.timeStamp);
 const day = date.getDate();
-const month = date.getMonth();
+const month = date.getMonth() +1;
 const time = date.getHours() + "-" + date.getMinutes();
 
   return (
