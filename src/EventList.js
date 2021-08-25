@@ -24,6 +24,9 @@ export function EventList() {
     const eventItem = parseEvent(draftItem);
     setEvents((events) => [...events, eventItem]);
     setDraftItem("");
+    localStorage.setItem("events", JSON.stringify([...events, eventItem]));
+
+
   }
 
   function deleteItem(eventToDelete) {
@@ -31,6 +34,8 @@ export function EventList() {
       (eventItem) => eventItem !== eventToDelete
     );
     setEvents(updatedEvents);
+    localStorage.setItem("events", JSON.stringify(updatedEvents));
+
   }
 
   function handleUpdateEvent(updatedEvent) {
@@ -38,6 +43,12 @@ export function EventList() {
       event.id === updatedEvent.id ? updatedEvent : event
     );
     setEvents(updatedEvents);
+    localStorage.setItem("events", JSON.stringify(updatedEvents));
+
+  }
+
+  function restoreEvents() {
+    setEvents(JSON.parse(localStorage.getItem("events")));
   }
 
   const defText = '[дата ДД/ММ ][время чч:мм ]["название" ][- кто ]- что, где';
@@ -45,6 +56,7 @@ export function EventList() {
 
   return (
     <div>
+      <button onClick={restoreEvents}>restore Events from localStorage</button>
       <p>
         <i>{defText}</i>
       </p>
@@ -70,6 +82,7 @@ export function EventList() {
           deleteItem={deleteItem}
         />
       ))}
+
       {eventToEdit !== null ? (
         <EventPopup
           isOpen={eventToEdit.id !== null}
@@ -78,6 +91,7 @@ export function EventList() {
           updateEvent={handleUpdateEvent}
         />
       ) : null}
+
     </div>
   );
 }
