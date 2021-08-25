@@ -56,7 +56,8 @@ export function EventList() {
 
   return (
     <div>
-      <button onClick={restoreEvents}>restore Events from localStorage</button>
+      <p>every change of EventList stored in localStorage</p>
+      {(localStorage.getItem("events") && localStorage.getItem("events").length > 2) ? (<button onClick={restoreEvents}>restore Events from localStorage</button>) : ""}
       <p>
         <i>{defText}</i>
       </p>
