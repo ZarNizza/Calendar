@@ -12,6 +12,7 @@ function CalendarHeader() {
     <div>
       <h2>Calendar</h2>
       <p>pure REACT version, skeleton edition</p>
+      <p>! functionality only, as an using tools example, without beautifies</p>
     </div>
   );
 }

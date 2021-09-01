@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { parseEvent } from "./parseEvent.js";
 import { EventItem } from "./EventItem.js";
 import { EventPopup } from "./EventPopup.js";
+import { CalendarTable } from "./calendarMatrix.js";
 
 export function EventList() {
+  const [activeDate, setActiveDate] = useState(new Date());
   const [draftItem, setDraftItem] = useState("");
   // arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
   const [events, setEvents] = useState([]);
@@ -21,7 +23,7 @@ export function EventList() {
   }
 
   function addItem() {
-    const eventItem = parseEvent(draftItem);
+    const eventItem = parseEvent(draftItem, activeDate);
     setEvents((events) => [...events, eventItem]);
     setDraftItem("");
     localStorage.setItem("events", JSON.stringify([...events, eventItem]));
@@ -56,6 +58,9 @@ export function EventList() {
 
   return (
     <div>
+      <CalendarTable
+      activeDate = {activeDate} 
+      setActiveDate = {setActiveDate} />
       <p>every change of EventList stored in localStorage</p>
       {(localStorage.getItem("events") && localStorage.getItem("events").length > 2) ? (<button onClick={restoreEvents}>restore Events from localStorage</button>) : ""}
       <p>

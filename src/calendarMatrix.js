@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 
-function CalendarTable() {
-  const [activeDate, setActiveDate] = useState(new Date());
-  window.aD = activeDate.getDate();
-  window.aM = activeDate.getMonth();
-  window.aY = activeDate.getFullYear();
+export function CalendarTable(props) {
+  const activeDate = props.activeDate;
+  const setActiveDate = props.setActiveDate;
   let monthsString = [
     "Январь",
     "Февраль",
@@ -66,10 +64,6 @@ function CalendarTable() {
       let month = activeDate.getMonth();
       let newActiveDate = new Date(+year, +month, +aDay);
       setActiveDate(newActiveDate);
-
-      window.aD = +aDay;
-      window.aM = month;
-      window.aY = year;
 
       document.getElementById("inputString").focus();
     }
@@ -136,4 +130,3 @@ function CalendarTable() {
     </div>
   );
 }
-export default CalendarTable;

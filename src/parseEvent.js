@@ -1,4 +1,4 @@
-export function parseEvent(draftItem) {
+export function parseEvent(draftItem, activeDate) {
  // arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
  let date = "";
  let day = "";
@@ -23,7 +23,8 @@ function errHandler() {
 
       date = draftItem.match(/(\d\d\/\d\d)|(\d\d\.\d\d)/i) ? draftItem.match(/(\d\d\/\d\d)|(\d\d\.\d\d)/i)[0] : "";
       if (date === "") {
-        const dateNow = new Date( Date.now());
+//        const dateNow = new Date( Date.now());
+        const dateNow = activeDate;
         day = dateNow.getDate();
         month = dateNow.getMonth() +1;
       } else {
