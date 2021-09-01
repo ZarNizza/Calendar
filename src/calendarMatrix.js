@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 export function CalendarTable(props) {
   const activeDate = props.activeDate;
@@ -99,6 +99,7 @@ export function CalendarTable(props) {
         </td>
       );
     });
+    
     return (
       <tr
         style={{

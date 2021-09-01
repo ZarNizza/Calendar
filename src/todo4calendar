@@ -1,9 +1,0 @@
-- edit in popup;
-- validate input; 
-- save to localStorage on reRender;
-- datePicker;
-
-
-c682f01d124dd0405708e427f680ffb647bceaeb rem moment
-
-de10a584dd6ae86ab31ac0236d1ca5020399489c add styled-comp

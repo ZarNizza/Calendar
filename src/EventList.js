@@ -7,9 +7,9 @@ import { CalendarTable } from "./calendarMatrix.js";
 export function EventList() {
   const [activeDate, setActiveDate] = useState(new Date());
   const [draftItem, setDraftItem] = useState("");
-  // arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
+  // memo: arr Events [{id: Math.random(), timeStamp:"", header:"", who:"", description:""}]
   const [events, setEvents] = useState([]);
-  // eventToEdit = null OR event
+  // memo: eventToEdit = null OR event
   const [eventToEdit, setEventToEdit] = useState(null);
 
   function handleChange(e) {
@@ -27,8 +27,6 @@ export function EventList() {
     setEvents((events) => [...events, eventItem]);
     setDraftItem("");
     localStorage.setItem("events", JSON.stringify([...events, eventItem]));
-
-
   }
 
   function deleteItem(eventToDelete) {
@@ -37,7 +35,6 @@ export function EventList() {
     );
     setEvents(updatedEvents);
     localStorage.setItem("events", JSON.stringify(updatedEvents));
-
   }
 
   function handleUpdateEvent(updatedEvent) {
@@ -46,7 +43,6 @@ export function EventList() {
     );
     setEvents(updatedEvents);
     localStorage.setItem("events", JSON.stringify(updatedEvents));
-
   }
 
   function restoreEvents() {
@@ -54,19 +50,25 @@ export function EventList() {
   }
 
   const defText = '[дата ДД/ММ ][время чч:мм ]["название" ][- кто ]- что, где';
-  const testText = '25/08 08-15 "Подвиг" - Барон М. - Завтрак, разогнать тучи, подвиг';
+  const testText =
+    '25/08 08-15 "Подвиг" - Барон М. - Завтрак, разогнать тучи, подвиг';
 
   return (
     <div>
-      <CalendarTable
-      activeDate = {activeDate} 
-      setActiveDate = {setActiveDate} />
+      <CalendarTable activeDate={activeDate} setActiveDate={setActiveDate} />
       <p>every change of EventList stored in localStorage</p>
-      {(localStorage.getItem("events") && localStorage.getItem("events").length > 2) ? (<button onClick={restoreEvents}>restore Events from localStorage</button>) : ""}
+      {localStorage.getItem("events") &&
+      localStorage.getItem("events").length > 2 ? (
+        <button onClick={restoreEvents}>
+          restore Events from localStorage
+        </button>
+      ) : (
+        ""
+      )}
       <p>
         <i>{defText}</i>
       </p>
-      <p style={{color:"lightgray"}}>{testText}</p>
+      <p style={{ color: "lightgray" }}>{testText}</p>
       <input
         type="text"
         id="inputString"
@@ -88,7 +90,6 @@ export function EventList() {
           deleteItem={deleteItem}
         />
       ))}
-
       {eventToEdit !== null ? (
         <EventPopup
           isOpen={eventToEdit.id !== null}
@@ -97,7 +98,6 @@ export function EventList() {
           updateEvent={handleUpdateEvent}
         />
       ) : null}
-
     </div>
   );
 }
