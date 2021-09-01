@@ -5,6 +5,20 @@ import { FlexBgDiv, FlexPopupDiv, SoloDiv } from "./styled-components/Center";
 export function EventPopup({ isOpen, event, closePopup, updateEvent }) {
 const [singleUpdatedEvent, setSingleUpdatedEvent] = useState(event);
 const [errors, setErrors] = useState([]);
+const date = new Date(event.timeStamp);
+const day = date.getDate();
+const month = date.getMonth() + 1;
+let time =
+  " " +
+  (date.getHours() < 10 ? "0" : "") +
+  date.getHours() +
+  ":" +
+  (date.getMinutes() < 10 ? "0" : "") +
+  date.getMinutes();
+if (time === " 00:00") {
+  time = "";
+}
+
 
   if (!isOpen) return null;
 
@@ -28,6 +42,9 @@ const [errors, setErrors] = useState([]);
   return (
     <FlexBgDiv>
       <FlexPopupDiv>
+        <SoloDiv>
+         <label>Date, Time: {day + '/' + month + time}</label>
+        </SoloDiv>
 {/* input area */}
         <SoloDiv>
           <label>
