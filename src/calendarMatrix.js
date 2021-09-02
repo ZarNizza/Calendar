@@ -60,9 +60,35 @@ export function CalendarTable(props) {
 
   function setActiveTD(aDay) {
     if (isFinite(aDay)) {
-      let year = activeDate.getFullYear();
-      let month = activeDate.getMonth();
-      let newActiveDate = new Date(+year, +month, +aDay);
+      let year = Number(activeDate.getFullYear());
+      let month = Number(activeDate.getMonth());
+      let day = Number(activeDate.getDate());
+
+      switch (aDay) {
+        case "+99": {
+          if (month === 11) {
+            month = 0;
+            year = year + 1;
+          } else {
+            month = month + 1;
+          }
+          break;
+        }
+        case "-99": {
+          if (month === 0) {
+            month = 11;
+            year = year - 1;
+          } else {
+            month = month - 1;
+          }
+          break;
+        }
+        default: {
+          day = Number(aDay);
+        }
+      }
+
+      let newActiveDate = new Date(year, month, day);
       setActiveDate(newActiveDate);
 
       document.getElementById("inputString").focus();
@@ -99,7 +125,7 @@ export function CalendarTable(props) {
         </td>
       );
     });
-    
+
     return (
       <tr
         style={{
@@ -122,8 +148,10 @@ export function CalendarTable(props) {
       <div id="editArea"></div>
       <table>
         <caption>
+          <button onClick={() => setActiveTD("-99")}> (-) </button>
           {monthsString[activeDate.getMonth()]} &nbsp;{" "}
           {activeDate.getFullYear()}
+          <button onClick={() => setActiveTD("+99")}> (+) </button>
         </caption>
         <thead>{rowFirst}</thead>
         <tbody>{rows}</tbody>
