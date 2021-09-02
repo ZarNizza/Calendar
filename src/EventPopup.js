@@ -13,13 +13,12 @@ export function EventPopup({ isOpen, event, closePopup, updateEvent }) {
     hour12: false,
   });
   const tmpDate = new Date(event.timeStamp);
-  const tmpFormattedDate = formatter
+  let tmpTimeString = formatter
     .format(tmpDate)
     .replace(/\s{1,}/g, " ")
     .replace(",", "")
     .replace(".", "/")
     .replace(":", "-");
-  const [tmpTimeString, setTmpTimeString] = useState(tmpFormattedDate);
 
   if (!isOpen) return null;
 
@@ -86,20 +85,20 @@ export function EventPopup({ isOpen, event, closePopup, updateEvent }) {
             Date, Time: &nbsp;
             <input
               id="inputDateTime"
-              value={tmpTimeString}
+              defaultValue={tmpTimeString}
               onChange={(e) => {
                 if (e.target.value > "") {
                   setErrors([]);
                 } else {
                   setErrors(["! incorrect date/time"]);
                 }
-                setTmpTimeString(
+                tmpTimeString = 
                   e.target.value
                     .replace(",", " ")
                     .replace(/\s{1,}/g, " ")
                     .replace(".", "/")
                     .replace(":", "-")
-                );
+                ;
                 const tts = tmpTimeStamp(tmpTimeString);
                 if (tts) {
                   setSingleUpdatedEvent((prev) => {const newValue = {...prev, timeStamp: tts}; return newValue;});
@@ -184,7 +183,6 @@ export function EventPopup({ isOpen, event, closePopup, updateEvent }) {
               const isValid = validate();
               if (isValid) {
                 const tts = tmpTimeStamp(tmpTimeString);
-
                 if (tts) {
                   setSingleUpdatedEvent((prev) => {const newValue = { ...prev, timeStamp: tts }; updateEvent(newValue); return newValue;});
                   console.log(
