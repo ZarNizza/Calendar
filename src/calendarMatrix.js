@@ -148,10 +148,20 @@ export function CalendarTable(props) {
       <div id="editArea"></div>
       <table>
         <caption>
-          <button onClick={() => setActiveTD("-99")}> (-) </button>
-          {monthsString[activeDate.getMonth()]} &nbsp;{" "}
-          {activeDate.getFullYear()}
-          <button onClick={() => setActiveTD("+99")}> (+) </button>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <button onClick={() => setActiveTD("-99")}> (-) </button>
+            <div>
+              {monthsString[activeDate.getMonth()]}&nbsp;
+              {activeDate.getFullYear()}
+            </div>
+            <button onClick={() => setActiveTD("+99")}> (+) </button>
+          </div>
         </caption>
         <thead>{rowFirst}</thead>
         <tbody>{rows}</tbody>
