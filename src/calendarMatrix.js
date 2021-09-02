@@ -1,3 +1,5 @@
+/* based on tutorial calendar script from WWW, deep refactored
+*/
 import React from "react";
 
 export function CalendarTable(props) {
@@ -148,20 +150,13 @@ export function CalendarTable(props) {
       <div id="editArea"></div>
       <table>
         <caption>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
+          <span style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
             <button onClick={() => setActiveTD("-99")}> (-) </button>
-            <div>
-              {monthsString[activeDate.getMonth()]}&nbsp;
-              {activeDate.getFullYear()}
-            </div>
+            <span>
+              {monthsString[activeDate.getMonth()]}&nbsp;{activeDate.getFullYear()}
+            </span>
             <button onClick={() => setActiveTD("+99")}> (+) </button>
-          </div>
+          </span>
         </caption>
         <thead>{rowFirst}</thead>
         <tbody>{rows}</tbody>
